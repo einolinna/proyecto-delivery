@@ -1,0 +1,56 @@
+<div class="container">
+  <div class="card">
+    <div class="class-header">
+      <h3 class="class-title text-center">Facturas </h3><br>
+      <button (click)="nuevaFactura()" class="btn btn-primary">Nueva</button><br>
+    </div>
+
+    <div class="class-body"><br>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Numero</th>
+            <th>Numero de Tarjeta</th>
+            <th>Total Venta</th>
+            <th>Descuento</th>
+            <th>Total Costo</th>
+            <th>Forma de Pago</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let factura of facturas"
+            class="text-center"
+            routerLink="/models/facturas"
+          >
+            <td>{{ factura.fecha }}</td>
+            <td>{{ factura.numero }}</td>
+            <td>{{ factura.nroTarjeta }}</td>
+            <td>{{ factura.totalVenta }}</td>
+            <td>{{ factura.montoDescuento }}</td>
+            <td>{{ factura.totalCosto }}</td>
+            <td>{{ factura.formaPago }}</td>
+            <td>
+              <button
+                (click)="editarFactura()"
+                style="margin-right: 10px"
+                class="btn btn-warning"
+              >
+                Editar
+              </button>
+              <button
+                (click)="borrarFactura()"
+                style="margin-right: 10px"
+                class="btn btn-danger"
+              >
+                Eliminar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

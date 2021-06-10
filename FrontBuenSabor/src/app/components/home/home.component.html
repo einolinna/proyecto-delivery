@@ -1,0 +1,10 @@
+<div class="container">
+  <div class="jumbotron">
+    <h2 class="display-4" *ngIf="!isLogged">Bienvenido</h2>
+    <h2 class="display-4" *ngIf="isLogged">Bienvenido {{userLogged.name}}</h2>
+    <p class="lead"></p>
+    <hr class="my-4">
+    <p></p>
+    <a href="" class="btn btn-primary-btn-lg"></a>
+  </div>
+</div>
