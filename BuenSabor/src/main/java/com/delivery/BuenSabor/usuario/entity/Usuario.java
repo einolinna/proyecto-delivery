@@ -27,15 +27,17 @@ public class Usuario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	private String nombre;
+	
 	@Column(name = "usuario", unique = true)
-	private String usuario;
+	private String nombreUsuario;
 	
 	@NotNull
 	@Column(unique = true)
 	private String email;
 	
 	@NotNull
-	private String clave;
+	private String password;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "usuario_rol", joinColumns = @JoinColumn(name = "usuario_id"),
@@ -46,70 +48,70 @@ public class Usuario {
 	@JoinColumn(name = "fk_cliente")
 	private Cliente cliente;
 	
-	public Usuario() {}
-	
-	public Usuario(String email, String password) {
+	public Usuario() {
+    }
+
+	public Usuario(String nombreUsuario, String email, String password) {
+		this.nombreUsuario = nombreUsuario;
 		this.email = email;
-		this.clave = password;
-	}
-
-	public String getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
-	}
-
-	public String getClave() {
-		return clave;
-	}
-
-	public void setClave(String clave) {
-		this.clave = clave;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Set<Rol> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(Set<Rol> roles) {
-		this.roles = roles;
-	}
-
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
+		this.password = password;
 	}
 	
-	public String getEmail() {
-		return email;
-	}
+    public Usuario(String nombre, String nombreUsuario,  String email, String password) {
+        this.nombre = nombre;
+        this.nombreUsuario = nombreUsuario;
+        this.email = email;
+        this.password = password;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public boolean login(Usuario user) {
-		if(this.usuario.equals(user.getUsuario())) {
-			if(this.clave.equals(user.getClave()))
-				return true;
-		}
-		return false;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	@Override
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Set<Rol> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Rol> roles) {
+        this.roles = roles;
+    }
+	/*@Override
 	public boolean equals(Object obj) {
 		if(this==obj) {
 			return true;
@@ -126,7 +128,7 @@ public class Usuario {
 		String obj = "Usuario: "+this.usuario + "/ clave: " + this.clave +
 				"/ clave: " + this.clave;
 		return obj;
-	}
+	}*/
 	
 	
 }

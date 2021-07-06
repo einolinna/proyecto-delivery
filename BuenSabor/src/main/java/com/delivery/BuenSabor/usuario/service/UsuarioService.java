@@ -16,9 +16,11 @@ public interface UsuarioService {
 	
 	public void deleteById(Long id);
 	
-	public boolean existsByUsuario(String usuario);
+	public boolean existsByNombreUsuario(String nombreUsuario);
 	
 	public Optional<Usuario> getByEmail(String email);
+	
+	public void updatePassword(String password, String usuario);
 	
 	public boolean existsEmail(String email);
 }

@@ -2,6 +2,7 @@ package com.delivery.BuenSabor.articuloManufacturado.service;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.delivery.BuenSabor.articuloManufacturado.entity.ArticuloMfact;
@@ -10,6 +11,7 @@ import com.delivery.BuenSabor.articuloManufacturado.repository.ArticuloMfactRepo
 @Service
 public class ArticuloMfactServiceImpl implements ArticuloMfactService {
 
+	@Autowired
 	protected ArticuloMfactRepository articuloMfactRepository; 
 	
 	@Override
@@ -30,6 +32,11 @@ public class ArticuloMfactServiceImpl implements ArticuloMfactService {
 	@Override
 	public void deleteById(Long id) {
 		articuloMfactRepository.deleteById(id);
+	}
+
+	@Override
+	public Iterable<ArticuloMfact> findByLike() {
+		return articuloMfactRepository.search();
 	}
 
 }

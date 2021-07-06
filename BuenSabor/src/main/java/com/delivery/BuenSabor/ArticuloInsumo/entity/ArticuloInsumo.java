@@ -1,22 +1,15 @@
 package com.delivery.BuenSabor.ArticuloInsumo.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.delivery.BuenSabor.RubroArticulo.entity.RubroArticulo;
-import com.delivery.BuenSabor.articuloMfactDetalle.entity.ArticuloMfactDetalle;
 
 @Entity
 @Table(name = "articulo_insumo")
@@ -46,17 +39,9 @@ public class ArticuloInsumo {
 	@Column(name = "es_insumo")
 	private boolean esInsumo;
 	
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = true)
 	@JoinColumn(name = "fk_rubro_articulo")
 	private RubroArticulo rubroArticulo;
-	
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinTable(
-			name = "artinsumo_artmfact",
-			joinColumns = @JoinColumn(name = " art_insumo_id"),
-			inverseJoinColumns = @JoinColumn(name = "articulo_mfact_id")
-			)
-	private List<ArticuloMfactDetalle> articuloMfactDetalle = new ArrayList<ArticuloMfactDetalle>();
 
 	public Long getId() {
 		return id;
@@ -130,14 +115,6 @@ public class ArticuloInsumo {
 		this.rubroArticulo = rubroArticulo;
 	}
 
-	public List<ArticuloMfactDetalle> getArticuloMfactDetalle() {
-		return articuloMfactDetalle;
-	}
-
-	public void setArticuloMfactDetalle(List<ArticuloMfactDetalle> articuloMfactDetalle) {
-		this.articuloMfactDetalle = articuloMfactDetalle;
-	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if(this==obj) {
@@ -161,9 +138,6 @@ public class ArticuloInsumo {
 				"/ UnidadDeMedida: " + this.unidadMedida +
 				"/ EsInsumo: " + this.esInsumo +
 				"/ RubroArticulo: " + this.rubroArticulo.getDenominacion();
-		for (ArticuloMfactDetalle articuloMfactDetalle2 : articuloMfactDetalle) {
-			obj = obj + articuloMfactDetalle2;
-		}
 		return obj;
 	}
 	

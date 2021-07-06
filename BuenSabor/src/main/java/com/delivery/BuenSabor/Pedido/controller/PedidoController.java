@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,7 @@ import com.delivery.BuenSabor.Pedido.service.PedidoServiceImpl;
 
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping(path = "/api/v1/pedido")
 public class PedidoController {
 	
@@ -58,8 +60,14 @@ public class PedidoController {
 		pedidoDb.setFecha(pedido.getFecha());
 		pedidoDb.setHoraEstimadaFin(pedido.getHoraEstimadaFin());
 		pedidoDb.setMercadoPagoDatos(pedido.getMercadoPagoDatos());
-		pedidoDb.setTipoEnvio(pedido.getTipoEnvio());
-		pedidoDb.setTotal(pedido.getTotal());
+		
+		//Validacion de retiro si es local aplica el 10% de descuento
+		
+		if(pedido.getTipoEnvio() == "Local") {
+			pedidoDb.setTotal(pedido.getTotal() - (0.1 * pedido.getTotal()));
+		}
+		
+		else {pedidoDb.setTotal(pedido.getTotal());}
 		return ResponseEntity.status(HttpStatus.CREATED).body(service.save(pedidoDb));
 	}
 	

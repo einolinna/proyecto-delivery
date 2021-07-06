@@ -2,6 +2,7 @@ package com.delivery.BuenSabor.Factura.controller;
 
 import java.util.Optional;
 
+import javax.mail.MessagingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,19 +18,23 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.delivery.BuenSabor.Factura.entity.Email;
 import com.delivery.BuenSabor.Factura.entity.Factura;
+import com.delivery.BuenSabor.Factura.service.EmailServiceImpl;
 import com.delivery.BuenSabor.Factura.service.FacturaServiceImpl;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 @RequestMapping(path = "/api/v1/factura")
 public class FacturaController {
 
 	@Autowired
 	protected FacturaServiceImpl service;
 	
+	@Autowired
+	private EmailServiceImpl serviceEmail;
+	
 	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CAJERO')")
-	@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping("/all")
 	public ResponseEntity<?> allFacturas(){
 		return ResponseEntity.ok().body(service.findAll());
@@ -65,11 +70,15 @@ public class FacturaController {
 	}
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CAJERO')")
-	@CrossOrigin(origins = "http://localhost:4200")
 	@PostMapping
-	public ResponseEntity<?> guardar(@RequestBody Factura cliente) {
-		Factura facturaeDb = service.save(cliente);
-		return ResponseEntity.status(HttpStatus.CREATED).body(facturaeDb);
+	public ResponseEntity<?> guardar(@RequestBody Factura factura, @RequestBody Email email) throws MessagingException {
+		Factura facturaDb = service.save(factura);
+		serviceEmail.sendMessageWithAttachment(
+				email.getTo(),
+				email.getSubject(),
+				email.getText(),
+				email.getPathToAttachment());
+		return ResponseEntity.status(HttpStatus.CREATED).body(facturaDb);
 	}
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CAJERO')")

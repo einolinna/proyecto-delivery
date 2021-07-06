@@ -1,3 +1,4 @@
+import { detalleFactura } from "./detalleFactura";
 
 
 export class facturas {
@@ -8,4 +9,5 @@ export class facturas {
   nroTarjeta: string;
   totalVenta: number;
   totalCosto: number;
+  detalleFactura:detalleFactura;
 }

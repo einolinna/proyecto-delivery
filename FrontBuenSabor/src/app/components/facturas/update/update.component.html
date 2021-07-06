@@ -1,0 +1,56 @@
+<div class="container col-md-6">
+    <div class="card">
+      <div class="class-header">
+        <p class="p-2 bg-success text-white text-center">Editar Factura</p>
+      </div>
+      <div class="card-body">
+        <form action="">
+          <div class="form-group">
+            <label for="">Fecha: </label>
+            <input type="date" class="form-control" [(ngModel)]="factura.fecha" name="Fecha" />
+          </div>
+          <div class="form-group">
+            <label for="">Numero: </label>
+            <input
+              type="text"
+              class="form-control" [(ngModel)]="factura.numero" name="numero"/>
+          </div>
+          <div class="form-group">
+            <label for="">Numero de Tarjeta:</label>
+            <input
+              type="text"
+              class="form-control" [(ngModel)]="factura.nroTarjeta" name="nroTarjeta"/>
+          </div>
+          <div class="form-group">
+            <label for="">Total Venta:</label>
+            <input
+              type="text"
+              class="form-control" [(ngModel)]="factura.totalVenta" name="totalVenta"/>
+          </div>
+          <div class="form-group">
+            <label for="">Descuento:</label>
+            <input
+              type="text"
+              class="form-control" [(ngModel)]="factura.montoDescuento" name="montoDescuento"/>
+          </div>
+          <div class="form-group">
+            <label for="">Total Costo:</label>
+            <input
+              type="text"
+              class="form-control" [(ngModel)]="factura.totalCosto" name="totalCosto"/>
+          </div>
+          <div class="form-group">
+            <label for="">Forma de Pago:</label>
+            <input
+              type="text"
+              class="form-control" [(ngModel)]="factura.formaPago" name="formaPago"/>
+          </div>
+  
+          <button (click)="Guardar(factura)" class="btn btn-info">
+            Guardar
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  

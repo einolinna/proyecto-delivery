@@ -1,13 +1,18 @@
 package com.delivery.BuenSabor.DetallePedido.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.delivery.BuenSabor.ArticuloInsumo.entity.ArticuloInsumo;
+import com.delivery.BuenSabor.Pedido.entity.Pedido;
 import com.delivery.BuenSabor.articuloManufacturado.entity.ArticuloMfact;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 @Entity
 @Table(name = "detalle_pedido")
@@ -20,13 +25,32 @@ public class DetallePedido {
 	
 	private double subtotal;
 	
-	@ManyToOne( optional = false)
-	@JoinColumn(name = "fk_articulo_mfact")
+	/*@ManyToOne( optional = false)
+	@JoinColumn(name = "fk_articulo_insumo")*/
+	@JsonIgnoreProperties(value= {"handler", "hibernateLazyInitializer"})
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_articulo_insumo")
+	private ArticuloInsumo articuloInsumo;
+	
+	@JsonIgnoreProperties(value= {"handler", "hibernateLazyInitializer"})
+	@ManyToOne(fetch = FetchType.LAZY)
+	/*@JsonProperty(access = Access.WRITE_ONLY)
+	@ManyToOne(fetch = FetchType.LAZY)*/
+	@JoinColumn(name = "id_articulo_mfact")
 	private ArticuloMfact articuloMfact;
 	
-	@ManyToOne( optional = false)
-	@JoinColumn(name = "fk_articulo_insumo")
-	private ArticuloInsumo articuloInsumo;
+	@JsonProperty(access = Access.WRITE_ONLY)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "pedido")
+	private Pedido pedido;
+
+	public Pedido getPedido() {
+		return pedido;
+	}
+
+	public void setPedido(Pedido pedido) {
+		this.pedido = pedido;
+	}
 
 	public Long getId() {
 		return id;

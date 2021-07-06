@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,7 @@ import com.delivery.BuenSabor.articuloManufacturado.entity.ArticuloMfact;
 import com.delivery.BuenSabor.articuloManufacturado.service.ArticuloMfactServiceImpl;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping(path = "api/v1/articulomanufaturado")
 public class articuloMfactController {
 
@@ -68,5 +70,10 @@ public class articuloMfactController {
 	public ResponseEntity<?> eliminarUno(@PathVariable Long id) {
 		service.deleteById(id);
 		return ResponseEntity.noContent().build();
+	}
+	
+	@GetMapping("/like")
+	public ResponseEntity<?> like(){
+		return ResponseEntity.ok().body(service.findByLike());
 	}
 }

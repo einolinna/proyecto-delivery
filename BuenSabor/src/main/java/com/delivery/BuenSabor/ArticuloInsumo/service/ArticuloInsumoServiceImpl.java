@@ -34,4 +34,13 @@ public class ArticuloInsumoServiceImpl implements ArticuloInsumoService {
 		repository.deleteById(id);
 	}
 
+	@Override
+	public Iterable<ArticuloInsumo> findByLike(){
+		return repository.search();
+	}
+
+	@Override
+	public Iterable<ArticuloInsumo> findByInsumo() {
+		return repository.articuloForCliente();
+	}
 }

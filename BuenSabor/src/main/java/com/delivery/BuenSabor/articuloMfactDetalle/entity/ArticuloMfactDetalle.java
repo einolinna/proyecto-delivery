@@ -2,6 +2,7 @@ package com.delivery.BuenSabor.articuloMfactDetalle.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -10,10 +11,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.delivery.BuenSabor.ArticuloInsumo.entity.ArticuloInsumo;
+import com.delivery.BuenSabor.articuloManufacturado.entity.ArticuloMfact;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 @Entity
 @Table(name = "articulo_mfact_detalle")
-public class ArticuloMfactDetalle {
+public class ArticuloMfactDetalle{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,9 +29,15 @@ public class ArticuloMfactDetalle {
 	@Column(name = "unidad_medida")
 	private String unidadMedida;
 	
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "fk_articulo_insumo")
+	@JsonIgnoreProperties(value= {"handler", "hibernateLazyInitializer"})
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_articulo_insumo")
 	private ArticuloInsumo articuloInsumo;
+	
+	@JsonProperty(access = Access.WRITE_ONLY)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_articulo_mfact")
+	private ArticuloMfact articuloMfact;
 
 	public Long getId() {
 		return id;
@@ -58,6 +69,14 @@ public class ArticuloMfactDetalle {
 
 	public void setArticuloInsumo(ArticuloInsumo articuloInsumo) {
 		this.articuloInsumo = articuloInsumo;
+	}
+
+	public ArticuloMfact getArticuloMfact() {
+		return articuloMfact;
+	}
+
+	public void setArticuloMfact(ArticuloMfact articuloMfact) {
+		this.articuloMfact = articuloMfact;
 	}
 
 	@Override

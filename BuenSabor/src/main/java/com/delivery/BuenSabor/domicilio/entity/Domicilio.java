@@ -14,9 +14,16 @@ public class Domicilio {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private int numero;
+	
 	
 	private String localidad;
+	
+	private String calle;
+	
+	private int numero;
+	
+
+
 
 	public Long getId() {
 		return id;
@@ -26,13 +33,6 @@ public class Domicilio {
 		this.id = id;
 	}
 
-	public int getNumero() {
-		return numero;
-	}
-
-	public void setNumero(int numero) {
-		this.numero = numero;
-	}
 
 	public String getLocalidad() {
 		return localidad;
@@ -41,6 +41,23 @@ public class Domicilio {
 	public void setLocalidad(String localidad) {
 		this.localidad = localidad;
 	}
+	
+	public String getCalle() {
+		return calle;
+	}
+
+	public void setCalle(String calle) {
+		this.calle = calle;
+	}
+	
+	public int getNumero() {
+		return numero;
+	}
+
+	public void setNumero(int numero) {
+		this.numero = numero;
+	}
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -56,7 +73,7 @@ public class Domicilio {
 
 	@Override
 	public String toString() {
-		String obj="Id:" + this.id + "/ Localidad:" + this.localidad + "/ Numero:" + this.numero;
+		String obj="Id:" + this.id + "/ Localidad:" + this.localidad + "/ Calle:" + this.calle +  "/ Numero:" + this.numero  ;
 		return obj;
 	}
 	

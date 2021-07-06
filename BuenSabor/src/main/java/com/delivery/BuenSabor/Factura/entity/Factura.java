@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -20,6 +21,7 @@ import javax.persistence.TemporalType;
 import com.delivery.BuenSabor.DetalleFactura.entity.DetalleFactura;
 import com.delivery.BuenSabor.Pedido.entity.Pedido;
 import com.delivery.BuenSabor.usuario.entity.Usuario;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "factura")
@@ -47,8 +49,8 @@ public class Factura {
 	@Temporal(TemporalType.DATE)
 	private Date fecha;
 
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "fk_detalles_factura")
+	@JsonIgnoreProperties(value= {"handler", "hibernateLazyInitializer"})
+	@OneToMany(mappedBy="factura",fetch = FetchType.LAZY)
 	private List<DetalleFactura> detallesFacturas;
 
 	@OneToOne(cascade = CascadeType.ALL)
@@ -171,7 +173,7 @@ public class Factura {
 				+ "/ totalCosto: " + this.totalCosto
 				+ "/ Pedido: " + this.pedido.getId();
 		for (DetalleFactura detalleFactura : detallesFacturas) {
-			obj = obj + detalleFactura.getId();
+			obj = obj + detalleFactura.toString();
 		}
 		return obj;
 	}

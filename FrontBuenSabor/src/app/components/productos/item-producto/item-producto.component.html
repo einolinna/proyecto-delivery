@@ -1,0 +1,12 @@
+<div class="card" style="width: 18rem;">
+  <img src="{{productoAux.imagen}}" class="card-img-top" alt="{{productoAux.denominacion}}">
+  <div class="card-body">
+    <h5 class="card-title">{{productoAux.denominacion}}</h5>
+    <p class="card-text">Descripcion del articulo</p>
+    <div class="d-flex">
+      <p class="price"> $ {{productoAux.precioVenta}}</p>
+      <button routerLink="/productos/detalle/{{productoAux.id}}/{{productoAux.esInsumo}}"
+        routerLinkActive="router-link-active" class="btn btn-outline-success" type="submit">Detalle</button>
+    </div>
+  </div>
+</div>

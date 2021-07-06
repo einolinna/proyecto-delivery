@@ -40,12 +40,14 @@ public class JwtTokenFilter extends OncePerRequestFilter{
 		            UsernamePasswordAuthenticationToken auth =
 		                    new UsernamePasswordAuthenticationToken(email, null, userDetails.getAuthorities());
 		            SecurityContextHolder.getContext().setAuthentication(auth);
+		            
 				} else {
-				String nombreUsuario = jwtProvider.getnombreUsuarioFromToken(token);
+					String nombreUsuario = jwtProvider.getnombreUsuarioFromToken(token);
 				UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(nombreUsuario);
 				UsernamePasswordAuthenticationToken auth = 
 						new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 				SecurityContextHolder.getContext().setAuthentication(auth);
+				
 				}
 			}
 		} catch (Exception e) {

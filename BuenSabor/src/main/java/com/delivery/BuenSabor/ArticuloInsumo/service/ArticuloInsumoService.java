@@ -13,4 +13,8 @@ public interface ArticuloInsumoService {
 	public ArticuloInsumo save(ArticuloInsumo articuloInsumo);
 	
 	public void deleteById(Long id);
+	
+	public Iterable<ArticuloInsumo> findByLike();
+	
+	public Iterable<ArticuloInsumo> findByInsumo();
 }

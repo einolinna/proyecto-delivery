@@ -21,7 +21,7 @@ export class ProdInterceptorService implements HttpInterceptor {
     let intReq = req;
     const token = this.tokenService.getToken();
     if (token != null) {
-      intReq = req.clone({
+      intReq = intReq.clone({
         headers: req.headers.set('Authorization', 'Bearer ' + token),
       });
     }

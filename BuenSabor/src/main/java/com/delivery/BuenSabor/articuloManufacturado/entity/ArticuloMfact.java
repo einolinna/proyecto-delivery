@@ -3,25 +3,28 @@ package com.delivery.BuenSabor.articuloManufacturado.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import com.delivery.BuenSabor.articuloMfactDetalle.entity.ArticuloMfactDetalle;
 import com.delivery.BuenSabor.rubroGeneral.entity.RubroGeneral;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "articulo_manufacturado")
-public class ArticuloMfact {
+public class ArticuloMfact{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_articulo_mfact")
 	private Long id;
 	
 	@Column(name = "tiempo_est_cocc")
@@ -29,15 +32,17 @@ public class ArticuloMfact {
 	
 	private String denominacion;
 	
-	@Column(name = "preio_venta")
+	@Column(name = "precio_venta")
 	private double precioVenta;
 	
 	private String imagen;
 	
-	@Transient
+	@ManyToOne(optional = true)
+	@JoinColumn(name = "fk_rubro_general")
 	private RubroGeneral rubroGeneral;
 	
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonIgnoreProperties(value= {"handler", "hibernateLazyInitializer"})
+	@OneToMany(fetch = FetchType.LAZY, mappedBy="articuloMfact")
 	private List<ArticuloMfactDetalle> articulosMfactDetalle;
 	
 	public ArticuloMfact() {

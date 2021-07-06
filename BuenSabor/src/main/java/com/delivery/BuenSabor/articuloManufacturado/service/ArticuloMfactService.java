@@ -13,4 +13,6 @@ public interface ArticuloMfactService {
 	public ArticuloMfact save(ArticuloMfact articuloMfact);
 	
 	public void deleteById(Long id);
+	
+	public Iterable<ArticuloMfact> findByLike();
 }

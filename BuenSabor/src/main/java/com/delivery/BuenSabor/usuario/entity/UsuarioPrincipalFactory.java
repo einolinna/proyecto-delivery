@@ -13,6 +13,6 @@ public class UsuarioPrincipalFactory {
                 usuario.getRoles().stream().map(rol -> 
                 new SimpleGrantedAuthority(rol.getRolNombre().name()))
                 .collect(Collectors.toList());
-		return new UsuarioPrincipal(usuario.getEmail(), usuario.getClave(), authorities);
+		return new UsuarioPrincipal(usuario.getEmail(), usuario.getPassword(), null, null, authorities);
 	}
 }

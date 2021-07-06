@@ -1,17 +1,11 @@
-<script>
-  // Agrega credenciales de SDK
-  const mp = new MercadoPago('PUBLIC_KEY', {
-    locale: 'es-AR'
-  });
+<div class="container">
+  <h2>Mas Pedidos</h2>
+  <div class="container">
+    <div class="card-deck">
+      <app-item-producto (productoSeleccionado)="verProducto($evet)" *ngFor="let producto of productos; let i = index"
+        [productoAux]="producto" [index]="producto.id">
 
-  // Inicializa el checkout
-  mp.checkout({
-    preference: {
-      id: 'YOUR_PREFERENCE_ID'
-    },
-    render: {
-      container: '.cho-container', // Indica dónde se mostrará el botón de pago
-      label: 'Pagar', // Cambia el texto del botón de pago (opcional)
-    }
-  });
-</script>
+      </app-item-producto>
+    </div>
+  </div>
+</div>

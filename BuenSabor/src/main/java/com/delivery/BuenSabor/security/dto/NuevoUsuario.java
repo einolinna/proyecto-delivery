@@ -3,63 +3,58 @@ package com.delivery.BuenSabor.security.dto;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-
-import com.delivery.BuenSabor.cliente.entity.Cliente;
 
 public class NuevoUsuario {
 
 	@NotBlank
-	private String usuario;
-	
-	@NotBlank
-	private String email;
-	
-	@NotBlank
-	private String password;
-	
-	private Set<String> roles = new HashSet<>();
-	
-	private Cliente cliente;
+    private String nombre;
+    @NotBlank
+    private String nombreUsuario;
+    @Email
+    private String email;
+    @NotBlank
+    private String password;
+    private Set<String> roles = new HashSet<>();
+//faltaria cliente
+    public String getNombre() {
+        return nombre;
+    }
 
-	public String getUsuario() {
-		return usuario;
-	}
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
-	}
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public Set<String> getRoles() {
-		return roles;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setRoles(Set<String> roles) {
-		this.roles = roles;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public Cliente getCliente() {
-		return cliente;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
+    public Set<String> getRoles() {
+        return roles;
+    }
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	
+    public void setRoles(Set<String> roles) {
+        this.roles = roles;
+    }
 }

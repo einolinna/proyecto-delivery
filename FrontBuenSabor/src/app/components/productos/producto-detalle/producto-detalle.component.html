@@ -1,0 +1,22 @@
+<hr>
+<div class="row">
+  <div class="col-md-4" style="text-align: center;">
+    <img src="{{producto.imagen}}" [alt]="producto.denominacion">
+
+  </div>
+  <div class="col-md-8">
+    <h3 style="color: darkslategrey">{{producto.denominacion}}</h3>
+    <hr>
+    <p><b>Precio:</b> ${{producto.precioVenta}}</p>
+    <!-- <p><b>descripcion:</b> {{producto.descripcion}}</p> -->
+    <p>
+      <input type="number" [(ngModel)]="producto.cantidad">
+    </p>
+    <div>
+      <a [routerLink]="['/productos']" class="btn btn-outline-secondary btn-block">Volver</a>
+      <span style="color:green; font-weight: bold;">
+        <button class="btn btn-outline-primary btn-block" (click)="comprar(producto)" value="1"> Añadir al
+          Carrito</button>
+      </span>
+    </div>
+  </div>

@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="shopping-cart">
+    <div class="shopping-cart-header">
+      <i class="fa fa-shopping-cart cart-icon"></i><span class="badge">{{cantidadTotal}}</span>
+      <div class="shopping-cart-total">
+        <span class="">Total:</span>
+        <span class="main-clor-text">${{precioTotal}}</span>
+      </div>
+    </div>
+
+    <ul class="shopping-cart-intems">
+      <li class="clearfix" *ngFor="let producto of productos">
+        <span class="">{{producto.denominacion}}</span>
+        <span class="">{{producto.precio}}</span>
+        <span class="">{{producto.cantidad}}</span>
+        <button type="button" class="btn btn-danger ml-4" (clicK)="remove(producto)"> Remover</button>
+      </li>
+    </ul>
+
+    <a href="" class="button">Boton MP?</a>
+  </div>
+</div>

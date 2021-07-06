@@ -23,7 +23,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 	@Override
 	public Optional<Usuario> findByUsuario(String usuario) {
-		return usuarioRepository.findByUsuario(usuario);
+		return usuarioRepository.findByNombreUsuario(usuario);
 	}
 
 	@Override
@@ -43,9 +43,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 	}
 	
 	@Override
-	public boolean existsByUsuario(String usuario) {
-		return usuarioRepository.existsByUsuario(usuario);
-	}
+	public boolean existsByNombreUsuario(String nombreUsuario){
+        return usuarioRepository.existsByNombreUsuario(nombreUsuario);
+    }
 
 	@Override
 	public Optional<Usuario> getByEmail(String email) {
@@ -56,4 +56,9 @@ public class UsuarioServiceImpl implements UsuarioService {
     public boolean existsEmail(String email) {
         return usuarioRepository.existsByEmail(email);
     }
+
+	@Override
+	public void updatePassword(String password, String usuario) {
+		usuarioRepository.updatePassword(password, usuario);
+	}
 }

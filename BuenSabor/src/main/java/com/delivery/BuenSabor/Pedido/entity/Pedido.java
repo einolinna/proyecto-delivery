@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,6 +23,7 @@ import com.delivery.BuenSabor.Factura.entity.Factura;
 import com.delivery.BuenSabor.MercadoPagoDatos.entiy.MercadoPagoDatos;
 import com.delivery.BuenSabor.cliente.entity.Cliente;
 import com.delivery.BuenSabor.domicilio.entity.Domicilio;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "pedido")
@@ -31,22 +33,21 @@ public class Pedido {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private int estado;
+	private String estado;
 	
 	@Column(name = "horas_estimadas_fin")
 	private Date horaEstimadaFin; // dataTime
 	
 	@Column(name = "tipo_envio")
-	private int tipoEnvio;
-	
+	private String tipoEnvio;
+
 	private double total;
 	
 	private Date fecha;
 
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "fk_detallePedido")
+	@JsonIgnoreProperties(value= {"handler", "hibernateLazyInitializer"})
+	@OneToMany(mappedBy="pedido",fetch = FetchType.LAZY)
 	 private List<DetallePedido> detallesPedido;
-	
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "fk_factura")
@@ -81,14 +82,6 @@ public class Pedido {
 		this.id = id;
 	}
 
-	public int getEstado() {
-		return estado;
-	}
-
-	public void setEstado(int estado) {
-		this.estado = estado;
-	}
-
 	public Date getHoraEstimadaFin() {
 		return horaEstimadaFin;
 	}
@@ -97,14 +90,13 @@ public class Pedido {
 		this.horaEstimadaFin = horaEstimadaFin;
 	}
 
-	public int getTipoEnvio() {
-		return tipoEnvio;
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 
-	public void setTipoEnvio(int tipoEnvio) {
+	public void setTipoEnvio(String tipoEnvio) {
 		this.tipoEnvio = tipoEnvio;
 	}
-
 	public double getTotal() {
 		return total;
 	}
@@ -123,6 +115,14 @@ public class Pedido {
 
 	public Factura getFactura() {
 		return factura;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public String getTipoEnvio() {
+		return tipoEnvio;
 	}
 
 	public void setFactura(Factura factura) {

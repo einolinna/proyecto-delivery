@@ -21,12 +21,19 @@ import { HomeComponent } from './components/home/home.component';
 import { interceptorProvider } from './services/interceptors/prod-interceptor.service';
 import { FormsModule } from '@angular/forms';
 import { PerfilComponent } from './components/perfil/perfil.component';
-import { FacturasComponent } from './components/perfil/facturas/facturas.component';
-import { PedidosComponent } from './components/perfil/pedidos/pedidos.component';
+import { FacturasComponent } from './components/facturas/facturas.component';
+import { PedidosComponent } from './components/pedidos/pedidos.component';
 import { FacturaService } from './services/factura.service';
-import { CreateComponent } from './components/perfil/facturas/create/create.component';
-import { UpdateComponent } from './components/perfil/facturas/update/update.component';
-import { DeleteComponent } from './components/perfil/facturas/delete/delete.component';
+import { CreateComponent } from './components/facturas/create/create.component';
+import { DeleteComponent } from './components/facturas/delete/delete.component';
+import { ItemProductoComponent } from './components/productos/item-producto/item-producto.component';
+import { ProductoDetalleComponent } from './components/productos/producto-detalle/producto-detalle.component';
+import { CarritoComponent } from './components/carrito/carrito.component';
+import { UpdateComponent } from './components/facturas/update/update.component';
+import { UsuarioComponent } from './components/perfil/usuario/usuario.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -40,8 +47,12 @@ import { DeleteComponent } from './components/perfil/facturas/delete/delete.comp
     FacturasComponent,
     PedidosComponent,
     CreateComponent,
-    UpdateComponent,
     DeleteComponent,
+    ItemProductoComponent,
+    ProductoDetalleComponent,
+    CarritoComponent,
+    UpdateComponent,
+    UsuarioComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,6 +61,9 @@ import { DeleteComponent } from './components/perfil/facturas/delete/delete.comp
     SocialLoginModule,
     ToastrModule.forRoot(),
     FormsModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatMenuModule,
   ],
   providers: [
     interceptorProvider,

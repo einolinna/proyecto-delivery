@@ -6,6 +6,7 @@ import {
   SocialUser,
 } from 'angularx-social-login';
 import { LoginUsuario } from '../models/login-usuario';
+import { TokenDto } from '../models/TokenDto';
 import { AuthService } from '../services/auth.service';
 import { TokenService } from '../services/token.service';
 
@@ -15,7 +16,7 @@ import { TokenService } from '../services/token.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  isLogged = false;
+  isLogged: boolean;
   isLoginFail = false;
   loginUsuario: LoginUsuario;
   nombreUsuario: string;
@@ -37,11 +38,13 @@ export class LoginComponent implements OnInit {
       this.isLogged = true;
       this.isLoginFail = false;
       this.roles = this.tokenService.getAuthorities();
+    } else {
+      this.authServiceSocial.authState.subscribe((data) => {
+        this.userLogged = data;
+        this.isLogged =
+          this.userLogged != null && this.tokenService.getToken() != null;
+      });
     }
-    this.authServiceSocial.authState.subscribe((data) => {
-      this.userLogged = data;
-      this.isLogged = this.userLogged != null;
-    });
   }
 
   onLogin(): void {
@@ -52,7 +55,7 @@ export class LoginComponent implements OnInit {
         this.isLoginFail = false;
 
         this.tokenService.setToken(data.token);
-        this.tokenService.setUserName(data.usuario);
+        this.tokenService.setUserName(data.nombreUsuario);
         this.tokenService.setAuthorities(data.authorities);
         this.roles = data.authorities;
         this.router.navigate(['/']);
@@ -61,7 +64,6 @@ export class LoginComponent implements OnInit {
         this.isLogged = false;
         this.isLoginFail = true;
         this.errMsj = err.error.message;
-        //console.log(err.error.message);
       }
     );
   }
@@ -70,9 +72,28 @@ export class LoginComponent implements OnInit {
     this.authServiceSocial
       .signIn(GoogleLoginProvider.PROVIDER_ID)
       .then((data) => {
-        this.userLogged = data;
-        this.isLogged = true;
-        this.router.navigate(['/']);
+        this.socialUser = data;
+        const tokenGoogle = new TokenDto(this.socialUser.idToken);
+        this.authService.google(tokenGoogle).subscribe(
+          (res) => {
+            this.tokenService.setToken(res.value);
+            this.isLogged = true;
+            this.router.navigate(['/']);
+          },
+          (err) => {
+            console.log(err);
+            if (err.status == 409) {
+              alert(
+                'Ya estas registrado inicia sesión con tu correo como usuario'
+              );
+              this.router.navigate(['/login']);
+            }
+            this.logOut();
+          }
+        );
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }
 

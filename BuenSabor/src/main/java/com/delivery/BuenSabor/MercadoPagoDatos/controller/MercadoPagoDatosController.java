@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,17 +17,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.delivery.BuenSabor.DetalleFactura.entity.DetalleFactura;
 import com.delivery.BuenSabor.Factura.entity.Factura;
 import com.delivery.BuenSabor.MercadoPagoDatos.entiy.MercadoPagoDatos;
 import com.delivery.BuenSabor.MercadoPagoDatos.service.MercadoPagoDatosServiceImpl;
 import com.mercadopago.MercadoPago;
-import com.mercadopago.exceptions.MPConfException;
 import com.mercadopago.exceptions.MPException;
 import com.mercadopago.resources.Preference;
 import com.mercadopago.resources.datastructures.preference.Item;
 
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping(path = "/api/v1/mpago")
 public class MercadoPagoDatosController {
 
@@ -85,10 +87,21 @@ public class MercadoPagoDatosController {
 		MercadoPago.SDK.setAccessToken("TEST-3502556041132733-050214-ef47a9e5aa971c2965bc747986c19440-187659340");
 		Preference preference = new Preference();
 		Item item = new Item();
-		item.setTitle("titulo producto")
-		.setQuantity(1)//cantidad de producto
-		.setUnitPrice((float)factura.getMontoDescuento());
-		preference.appendItem(item);
+		for (DetalleFactura detalle : factura.getDetallesFacturas()) {
+			if(detalle.getArticuloInsumo() == null) {
+				item.setTitle(detalle.getArticuloMfact().getDenominacion())
+				.setQuantity(detalle.getCantidad())
+				.setUnitPrice((float)detalle.getArticuloMfact().getPrecioVenta())
+				;
+				preference.appendItem(item);
+			} else {
+				item.setTitle(detalle.getArticuloInsumo().getDenominacion())
+				.setQuantity(detalle.getCantidad())
+				.setUnitPrice((float) detalle.getArticuloInsumo().getPrecioVenta());
+				preference.appendItem(item);
+			}
+			
+		}
 		preference.save();
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(preference);
 	}

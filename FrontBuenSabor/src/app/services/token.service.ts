@@ -18,7 +18,9 @@ export class TokenService {
   }
 
   public getToken(): string {
-    return sessionStorage.getItem(TOKEN_KEY);
+    const token_key = sessionStorage.getItem(TOKEN_KEY);
+    return token_key;
+    //return sessionStorage.getItem(TOKEN_KEY);
   }
 
   public setUserName(userName: string): void {
@@ -27,7 +29,8 @@ export class TokenService {
   }
 
   public getUserName(): string {
-    return sessionStorage.getItem(USERNAME_KEY);
+    const username = sessionStorage.getItem(USERNAME_KEY);
+    return username;
   }
 
   public setAuthorities(authorities: string[]): void {
